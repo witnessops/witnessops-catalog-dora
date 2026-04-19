@@ -1,0 +1,26 @@
+{
+  "name": "owner",
+  "type": "string",
+  "enum": [
+    "architecture_owner",
+    "backup_owner",
+    "compliance_reporting_owner",
+    "control_owner",
+    "incident_manager",
+    "incident_review_chair",
+    "legal_risk_authority",
+    "notification_authority",
+    "platform_owner",
+    "policy_owner",
+    "recovery_owner",
+    "regulatory_liaison_authority",
+    "regulatory_reporting_authority",
+    "resilience_risk_authority",
+    "risk_owner",
+    "senior_testing_authority",
+    "service_owner",
+    "testing_authority",
+    "third_party_risk_authority",
+    "vendor_risk_owner"
+  ]
+}
