@@ -14,8 +14,11 @@ Boundary:
 ## Current files
 
 - `catalog/dora-workflows.v1.json` — initial machine-readable workflow catalog
-- `schemas/workflow-catalog.schema.json` — JSON Schema for the catalog shape
-- `scripts/validate_catalog.py` — local validator for all catalog JSON files
+- `schemas/workflow-catalog.schema.json` — JSON Schema for the catalog shape and normalized vocabularies
+- `schemas/enums/owner.enum.json` — authoritative allowed values for `owner`
+- `schemas/enums/deadline-type.enum.json` — authoritative allowed values for `deadline.type`
+- `schemas/enums/dora-pillar.enum.json` — authoritative allowed values for `dora_mapping.pillars`
+- `scripts/validate_catalog.py` — local validator for all catalog JSON files plus enum/schema alignment checks
 - `.github/workflows/validate-catalog.yml` — CI gate enforcing schema validation on push and pull request
 
 ## Data contract
@@ -30,6 +33,16 @@ Each workflow row contains:
 - `required_evidence`
 - `status_states`
 - `dora_mapping`
+
+## Vocabulary discipline
+
+The schema now enforces normalized enums for:
+- `owner`
+- `deadline.type`
+- `dora_mapping.pillars`
+
+The enum files under `schemas/enums/` are treated as authoritative vocabulary surfaces.
+The local validator checks that the schema's embedded enum values remain identical to those enum files.
 
 ## Deadline policy
 
@@ -51,8 +64,9 @@ python scripts/validate_catalog.py
 
 CI validation:
 - runs on pushes to `main`
-- runs on pull requests affecting catalog, schema, validator, or workflow files
+- runs on pull requests affecting catalog, schema, enum files, validator, or workflow files
 - fails the build if any catalog JSON file no longer conforms to the schema
+- fails the build if schema enums and normalized enum files diverge
 
 ## Design notes
 
@@ -66,8 +80,8 @@ This repository currently stores the workflow catalog only. It does not yet cont
 
 ## Next useful additions
 
-- normalized enums for `owner`
 - separate schema for `deadline`
 - issue templates for workflow changes
 - versioned changelog for catalog mutations
 - CSV/JSONL export generation
+- workflow examples or golden fixtures for validator tests
