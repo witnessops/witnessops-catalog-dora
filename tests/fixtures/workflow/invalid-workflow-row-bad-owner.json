@@ -1,0 +1,25 @@
+{
+  "workflow_id": "DORA-001",
+  "workflow_name": "ICT asset registration",
+  "trigger": [
+    "new system enters use"
+  ],
+  "owner": "not_a_real_owner",
+  "deadline": null,
+  "required_evidence": [
+    "asset_record",
+    "named_owner"
+  ],
+  "status_states": [
+    "draft",
+    "approved"
+  ],
+  "dora_mapping": {
+    "pillars": [
+      "ict_risk_management"
+    ],
+    "official_surface": [
+      "ict_risk_management"
+    ]
+  }
+}
