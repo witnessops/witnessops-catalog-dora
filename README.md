@@ -75,6 +75,7 @@ Current deadline fixtures:
 Current workflow-row fixtures:
 - `tests/fixtures/workflow/valid-dora-009-row.json`
 - `tests/fixtures/workflow/invalid-workflow-row-bad-owner.json`
+- `tests/fixtures/workflow/invalid-workflow-row-bad-pillar.json`
 
 The validator treats these as an expected pass/fail corpus:
 - valid fixtures must validate successfully
@@ -120,5 +121,4 @@ This repository currently stores the workflow catalog only. It does not yet cont
 - issue templates for workflow changes
 - versioned changelog for catalog mutations
 - CSV/JSONL export generation
-- additional invalid workflow fixtures such as bad `dora_mapping.pillars`
 - dedicated schema for `dora_mapping` if official-surface discipline needs tightening later
