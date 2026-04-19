@@ -1,0 +1,47 @@
+{
+  "workflow_id": "DORA-009",
+  "workflow_name": "Major incident reporting orchestration",
+  "trigger": [
+    "incident is classified as major"
+  ],
+  "owner": "regulatory_reporting_authority",
+  "deadline": {
+    "type": "regulatory_multi_stage",
+    "initial_notification": {
+      "within": "4h_after_classification",
+      "outer_limit": "24h_after_detection"
+    },
+    "intermediate_report": {
+      "within": "72h"
+    },
+    "final_report": {
+      "within": "1_month"
+    }
+  },
+  "required_evidence": [
+    "initial_report_packet",
+    "intermediate_report_packet",
+    "final_report_packet",
+    "submission_receipts",
+    "incident_lineage",
+    "approver_identity"
+  ],
+  "status_states": [
+    "awaiting_initial_report",
+    "initial_report_submitted",
+    "awaiting_intermediate_report",
+    "intermediate_report_submitted",
+    "awaiting_final_report",
+    "final_report_submitted",
+    "closed",
+    "overdue"
+  ],
+  "dora_mapping": {
+    "pillars": [
+      "ict_related_incidents"
+    ],
+    "official_surface": [
+      "major_incident_reporting"
+    ]
+  }
+}
