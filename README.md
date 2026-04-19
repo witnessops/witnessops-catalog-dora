@@ -16,6 +16,7 @@ Boundary:
 - `catalog/dora-workflows.v1.json` — initial machine-readable workflow catalog
 - `schemas/workflow-catalog.schema.json` — top-level catalog schema
 - `schemas/deadline.schema.json` — dedicated deadline schema with per-type structural rules
+- `schemas/dora-mapping.schema.json` — dedicated DORA mapping schema for pillars and official surfaces
 - `schemas/enums/owner.enum.json` — authoritative allowed values for `owner`
 - `schemas/enums/deadline-type.enum.json` — authoritative allowed values for `deadline.type`
 - `schemas/enums/dora-pillar.enum.json` — authoritative allowed values for `dora_mapping.pillars`
@@ -49,7 +50,7 @@ The local validator checks that schema enum values remain identical to those enu
 
 ## Deadline contract
 
-`deadline` is now split into a dedicated schema.
+`deadline` is split into a dedicated schema.
 
 Rules:
 - `deadline` may still be `null`
@@ -63,6 +64,19 @@ Rules:
   - `value`
 
 This split keeps timer-bearing workflows structurally explicit without forcing the same shape onto simpler internal-policy deadlines.
+
+## DORA mapping contract
+
+`dora_mapping` is now split into a dedicated schema.
+
+Rules today:
+- `pillars` must use normalized allowed values
+- `official_surface` remains a bounded non-empty string array
+- the top-level workflow schema resolves `dora_mapping` through `schemas/dora-mapping.schema.json`
+
+Reason for the split:
+- pillar vocabulary now has a single authority surface
+- future per-pillar restrictions on `official_surface` can be added in one place without modifying the whole workflow schema
 
 ## Golden fixtures
 
@@ -103,6 +117,7 @@ CI validation:
 - fails the build if any catalog JSON file no longer conforms to the schema
 - fails the build if schema enums and normalized enum files diverge
 - resolves the dedicated deadline schema during validation rather than relying on implicit network fetches
+- resolves the dedicated DORA mapping schema during validation rather than relying on implicit network fetches
 - runs the golden deadline fixture corpus
 - runs the golden workflow-row fixture corpus
 
@@ -121,4 +136,4 @@ This repository currently stores the workflow catalog only. It does not yet cont
 - issue templates for workflow changes
 - versioned changelog for catalog mutations
 - CSV/JSONL export generation
-- dedicated schema for `dora_mapping` if official-surface discipline needs tightening later
+- per-pillar `official_surface` rules inside `schemas/dora-mapping.schema.json`
