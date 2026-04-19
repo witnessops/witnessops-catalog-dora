@@ -1,0 +1,21 @@
+{
+  "name": "deadline.type",
+  "type": "string",
+  "enum": [
+    "contractual_notice_window",
+    "external_request_deadline",
+    "governance_reporting_cycle",
+    "immediate_intake",
+    "internal_gate",
+    "internal_policy",
+    "internal_policy_or_competent_authority_guidance",
+    "periodic_review",
+    "pre_contract_gate",
+    "pre_participation_gate",
+    "program_cycle",
+    "regulatory_multi_stage",
+    "regulatory_record_maintenance",
+    "risk_based_review_cycle",
+    "severity_based_internal_sla"
+  ]
+}
