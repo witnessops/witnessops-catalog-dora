@@ -23,6 +23,19 @@
         "incident_management",
         "major_incident_reporting"
       ]
+    },
+    "ictThirdPartyRiskExactSurface": {
+      "type": "string",
+      "enum": [
+        "third_party_risk_management",
+        "provider_due_diligence",
+        "register_of_information",
+        "ict_contractual_arrangements",
+        "key_contractual_provisions",
+        "contractual_risk_management",
+        "subcontracting",
+        "third_party_change_governance"
+      ]
     }
   },
   "type": "object",
@@ -68,6 +81,31 @@
             "minItems": 1,
             "items": {
               "$ref": "#/$defs/ictRelatedIncidentsExactSurface"
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "pillars": {
+            "const": [
+              "ict_third_party_risk_management"
+            ]
+          }
+        },
+        "required": [
+          "pillars"
+        ]
+      },
+      "then": {
+        "properties": {
+          "official_surface": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "$ref": "#/$defs/ictThirdPartyRiskExactSurface"
             }
           }
         }
