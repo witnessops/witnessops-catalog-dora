@@ -20,6 +20,15 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_PATH = REPO_ROOT / "schemas" / "workflow-catalog.schema.json"
 DEADLINE_SCHEMA_PATH = REPO_ROOT / "schemas" / "deadline.schema.json"
 CATALOG_DIR = REPO_ROOT / "catalog"
+FIXTURE_DIR = REPO_ROOT / "tests" / "fixtures" / "deadline"
+VALID_FIXTURES = [
+    FIXTURE_DIR / "valid-simple-deadline.json",
+    FIXTURE_DIR / "valid-regulatory-multi-stage.json",
+]
+INVALID_FIXTURES = [
+    FIXTURE_DIR / "invalid-regulatory-multi-stage-missing-final-report.json",
+    FIXTURE_DIR / "invalid-simple-deadline-extra-key.json",
+]
 ENUM_SPECS = {
     "owner": {
         "path": REPO_ROOT / "schemas" / "enums" / "owner.enum.json",
@@ -109,6 +118,40 @@ def validate_enum_alignment(schema_docs: dict[Path, dict]) -> bool:
     return ok
 
 
+def validate_golden_fixtures(deadline_validator: Draft202012Validator) -> bool:
+    ok = True
+
+    for fixture_path in VALID_FIXTURES:
+        if not fixture_path.exists():
+            print(f"Missing valid fixture: {fixture_path}", file=sys.stderr)
+            ok = False
+            continue
+        data = load_json(fixture_path)
+        errors = sorted(deadline_validator.iter_errors(data), key=lambda err: list(err.absolute_path))
+        if errors:
+            ok = False
+            print(f"EXPECTED VALID BUT FAILED {fixture_path.relative_to(REPO_ROOT)}", file=sys.stderr)
+            for error in errors:
+                print(f"  - {format_error(error)}", file=sys.stderr)
+        else:
+            print(f"FIXTURE VALID   {fixture_path.relative_to(REPO_ROOT)}")
+
+    for fixture_path in INVALID_FIXTURES:
+        if not fixture_path.exists():
+            print(f"Missing invalid fixture: {fixture_path}", file=sys.stderr)
+            ok = False
+            continue
+        data = load_json(fixture_path)
+        errors = sorted(deadline_validator.iter_errors(data), key=lambda err: list(err.absolute_path))
+        if not errors:
+            ok = False
+            print(f"EXPECTED INVALID BUT PASSED {fixture_path.relative_to(REPO_ROOT)}", file=sys.stderr)
+        else:
+            print(f"FIXTURE INVALID {fixture_path.relative_to(REPO_ROOT)}")
+
+    return ok
+
+
 def main() -> int:
     for required_path in (SCHEMA_PATH, DEADLINE_SCHEMA_PATH):
         if not required_path.exists():
@@ -129,6 +172,10 @@ def main() -> int:
 
     registry = build_registry(schema_docs)
     validator = Draft202012Validator(schema_docs[SCHEMA_PATH], registry=registry)
+    deadline_validator = Draft202012Validator(schema_docs[DEADLINE_SCHEMA_PATH], registry=registry)
+
+    if not validate_golden_fixtures(deadline_validator):
+        return 1
 
     failed = False
     for catalog_path in catalog_files:
