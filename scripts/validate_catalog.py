@@ -18,6 +18,20 @@ except ImportError as exc:  # pragma: no cover
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_PATH = REPO_ROOT / "schemas" / "workflow-catalog.schema.json"
 CATALOG_DIR = REPO_ROOT / "catalog"
+ENUM_SPECS = {
+    "owner": {
+        "path": REPO_ROOT / "schemas" / "enums" / "owner.enum.json",
+        "schema_path": ("$defs", "ownerEnum", "enum"),
+    },
+    "deadline.type": {
+        "path": REPO_ROOT / "schemas" / "enums" / "deadline-type.enum.json",
+        "schema_path": ("$defs", "deadlineTypeEnum", "enum"),
+    },
+    "dora_mapping.pillars": {
+        "path": REPO_ROOT / "schemas" / "enums" / "dora-pillar.enum.json",
+        "schema_path": ("$defs", "doraPillarEnum", "enum"),
+    },
+}
 
 
 def load_json(path: Path):
@@ -46,6 +60,35 @@ def format_error(error) -> str:
     return f"{location}: {error.message}"
 
 
+def get_nested(document, path_parts):
+    current = document
+    for part in path_parts:
+        current = current[part]
+    return current
+
+
+def validate_enum_alignment(schema: dict) -> bool:
+    ok = True
+    for name, spec in ENUM_SPECS.items():
+        enum_path = spec["path"]
+        if not enum_path.exists():
+            print(f"Missing enum file: {enum_path}", file=sys.stderr)
+            ok = False
+            continue
+
+        enum_doc = load_json(enum_path)
+        file_enum = enum_doc.get("enum")
+        schema_enum = get_nested(schema, spec["schema_path"])
+
+        if file_enum != schema_enum:
+            ok = False
+            print(f"ENUM MISMATCH {name}", file=sys.stderr)
+            print(f"  file:   {enum_path.relative_to(REPO_ROOT)}", file=sys.stderr)
+            print(f"  schema: {'/'.join(spec['schema_path'])}", file=sys.stderr)
+
+    return ok
+
+
 def main() -> int:
     if not SCHEMA_PATH.exists():
         print(f"Schema file not found: {SCHEMA_PATH}", file=sys.stderr)
@@ -57,6 +100,9 @@ def main() -> int:
         return 2
 
     schema = load_json(SCHEMA_PATH)
+    if not validate_enum_alignment(schema):
+        return 1
+
     validator = Draft202012Validator(schema)
 
     failed = False
