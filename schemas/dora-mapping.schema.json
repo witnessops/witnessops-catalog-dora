@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/witnessops/witnessops-catalog-dora/schemas/dora-mapping.schema.json",
+  "title": "WitnessOps DORA Mapping",
+  "$defs": {
+    "doraPillarEnum": {
+      "type": "string",
+      "enum": [
+        "digital_operational_resilience_testing",
+        "ict_related_incidents",
+        "ict_risk_management",
+        "ict_third_party_risk_management",
+        "information_sharing"
+      ]
+    },
+    "officialSurface": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "pillars",
+    "official_surface"
+  ],
+  "properties": {
+    "pillars": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/doraPillarEnum"
+      }
+    },
+    "official_surface": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/officialSurface"
+      }
+    }
+  }
+}
