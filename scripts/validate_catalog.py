@@ -22,6 +22,7 @@ DEADLINE_SCHEMA_PATH = REPO_ROOT / "schemas" / "deadline.schema.json"
 DORA_MAPPING_SCHEMA_PATH = REPO_ROOT / "schemas" / "dora-mapping.schema.json"
 CATALOG_DIR = REPO_ROOT / "catalog"
 DEADLINE_FIXTURE_DIR = REPO_ROOT / "tests" / "fixtures" / "deadline"
+DORA_MAPPING_FIXTURE_DIR = REPO_ROOT / "tests" / "fixtures" / "dora-mapping"
 WORKFLOW_FIXTURE_DIR = REPO_ROOT / "tests" / "fixtures" / "workflow"
 VALID_DEADLINE_FIXTURES = [
     DEADLINE_FIXTURE_DIR / "valid-simple-deadline.json",
@@ -30,6 +31,13 @@ VALID_DEADLINE_FIXTURES = [
 INVALID_DEADLINE_FIXTURES = [
     DEADLINE_FIXTURE_DIR / "invalid-regulatory-multi-stage-missing-final-report.json",
     DEADLINE_FIXTURE_DIR / "invalid-simple-deadline-extra-key.json",
+]
+VALID_DORA_MAPPING_FIXTURES = [
+    DORA_MAPPING_FIXTURE_DIR / "valid-major-incident-mapping.json",
+]
+INVALID_DORA_MAPPING_FIXTURES = [
+    DORA_MAPPING_FIXTURE_DIR / "invalid-bad-pillar.json",
+    DORA_MAPPING_FIXTURE_DIR / "invalid-empty-official-surface.json",
 ]
 VALID_WORKFLOW_FIXTURES = [
     WORKFLOW_FIXTURE_DIR / "valid-dora-009-row.json",
@@ -161,6 +169,40 @@ def validate_deadline_golden_fixtures(deadline_validator: Draft202012Validator) 
     return ok
 
 
+def validate_dora_mapping_golden_fixtures(dora_mapping_validator: Draft202012Validator) -> bool:
+    ok = True
+
+    for fixture_path in VALID_DORA_MAPPING_FIXTURES:
+        if not fixture_path.exists():
+            print(f"Missing valid dora_mapping fixture: {fixture_path}", file=sys.stderr)
+            ok = False
+            continue
+        data = load_json(fixture_path)
+        errors = sorted(dora_mapping_validator.iter_errors(data), key=lambda err: list(err.absolute_path))
+        if errors:
+            ok = False
+            print(f"EXPECTED VALID BUT FAILED {fixture_path.relative_to(REPO_ROOT)}", file=sys.stderr)
+            for error in errors:
+                print(f"  - {format_error(error)}", file=sys.stderr)
+        else:
+            print(f"FIXTURE VALID   {fixture_path.relative_to(REPO_ROOT)}")
+
+    for fixture_path in INVALID_DORA_MAPPING_FIXTURES:
+        if not fixture_path.exists():
+            print(f"Missing invalid dora_mapping fixture: {fixture_path}", file=sys.stderr)
+            ok = False
+            continue
+        data = load_json(fixture_path)
+        errors = sorted(dora_mapping_validator.iter_errors(data), key=lambda err: list(err.absolute_path))
+        if not errors:
+            ok = False
+            print(f"EXPECTED INVALID BUT PASSED {fixture_path.relative_to(REPO_ROOT)}", file=sys.stderr)
+        else:
+            print(f"FIXTURE INVALID {fixture_path.relative_to(REPO_ROOT)}")
+
+    return ok
+
+
 def validate_workflow_row_golden_fixtures(catalog_validator: Draft202012Validator) -> bool:
     ok = True
 
@@ -217,8 +259,11 @@ def main() -> int:
     registry = build_registry(schema_docs)
     catalog_validator = Draft202012Validator(schema_docs[SCHEMA_PATH], registry=registry)
     deadline_validator = Draft202012Validator(schema_docs[DEADLINE_SCHEMA_PATH], registry=registry)
+    dora_mapping_validator = Draft202012Validator(schema_docs[DORA_MAPPING_SCHEMA_PATH], registry=registry)
 
     if not validate_deadline_golden_fixtures(deadline_validator):
+        return 1
+    if not validate_dora_mapping_golden_fixtures(dora_mapping_validator):
         return 1
     if not validate_workflow_row_golden_fixtures(catalog_validator):
         return 1
