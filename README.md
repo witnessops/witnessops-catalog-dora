@@ -74,10 +74,16 @@ Rules today:
 - `pillars` must use normalized allowed values
 - `official_surface` remains a bounded non-empty string array
 - the top-level workflow schema resolves `dora_mapping` through `schemas/dora-mapping.schema.json`
+- exact single-pillar `ict_related_incidents` mappings are currently narrowed to:
+  - `incident_management`
+  - `major_incident_reporting`
 
 Reason for the split:
 - pillar vocabulary now has a single authority surface
 - future per-pillar restrictions on `official_surface` can be added in one place without modifying the whole workflow schema
+
+Implementation note:
+- to preserve catalog validity under the narrow exact-incident branch, incident-adjacent rows that use other incident surfaces are currently modeled as mixed-pillar mappings rather than exact single-pillar incident mappings
 
 ## Golden fixtures
 
@@ -89,8 +95,10 @@ Current deadline fixtures:
 
 Current DORA mapping fixtures:
 - `tests/fixtures/dora-mapping/valid-major-incident-mapping.json`
+- `tests/fixtures/dora-mapping/valid-incident-management-mapping.json`
 - `tests/fixtures/dora-mapping/invalid-bad-pillar.json`
 - `tests/fixtures/dora-mapping/invalid-empty-official-surface.json`
+- `tests/fixtures/dora-mapping/invalid-ict-related-incidents-disallowed-surface.json`
 
 Current workflow-row fixtures:
 - `tests/fixtures/workflow/valid-dora-009-row.json`
@@ -145,4 +153,4 @@ This repository currently stores the workflow catalog only. It does not yet cont
 - issue templates for workflow changes
 - versioned changelog for catalog mutations
 - CSV/JSONL export generation
-- per-pillar `official_surface` rules inside `schemas/dora-mapping.schema.json`
+- expand per-pillar `official_surface` rules inside `schemas/dora-mapping.schema.json` one pillar at a time
