@@ -1,0 +1,809 @@
+[
+  {
+    "workflow_id": "DORA-001",
+    "workflow_name": "ICT asset registration",
+    "trigger": [
+      "new system enters use",
+      "new service enters use",
+      "new environment is created",
+      "material ICT component is added"
+    ],
+    "owner": "platform_owner",
+    "deadline": null,
+    "required_evidence": [
+      "asset_record",
+      "named_owner",
+      "environment_classification",
+      "criticality_classification",
+      "dependency_list",
+      "review_date"
+    ],
+    "status_states": [
+      "draft",
+      "submitted",
+      "under_review",
+      "approved",
+      "active",
+      "retired"
+    ],
+    "dora_mapping": {
+      "pillars": ["ict_risk_management"],
+      "official_surface": ["ict_risk_management", "ict_asset_management_policy"]
+    }
+  },
+  {
+    "workflow_id": "DORA-002",
+    "workflow_name": "Critical or important function mapping",
+    "trigger": [
+      "new business service is launched",
+      "service criticality changes",
+      "material architecture change occurs",
+      "annual service review"
+    ],
+    "owner": "service_owner",
+    "deadline": null,
+    "required_evidence": [
+      "service_record",
+      "criticality_decision",
+      "supporting_ict_map",
+      "named_accountable_owner",
+      "approval_receipt"
+    ],
+    "status_states": [
+      "draft",
+      "submitted",
+      "under_review",
+      "approved",
+      "active",
+      "superseded"
+    ],
+    "dora_mapping": {
+      "pillars": ["ict_risk_management", "ict_third_party_risk_management"],
+      "official_surface": ["critical_or_important_functions", "ict_dependency_governance"]
+    }
+  },
+  {
+    "workflow_id": "DORA-003",
+    "workflow_name": "ICT dependency register update",
+    "trigger": [
+      "network path changes",
+      "provider changes",
+      "integration changes",
+      "data flow changes",
+      "architecture review identifies dependency drift"
+    ],
+    "owner": "architecture_owner",
+    "deadline": null,
+    "required_evidence": [
+      "dependency_manifest",
+      "change_diff",
+      "affected_service_list",
+      "approver_identity",
+      "timestamped_update_receipt"
+    ],
+    "status_states": [
+      "draft",
+      "submitted",
+      "under_review",
+      "approved",
+      "active",
+      "superseded"
+    ],
+    "dora_mapping": {
+      "pillars": ["ict_risk_management"],
+      "official_surface": ["ict_risk_management", "dependency_management"]
+    }
+  },
+  {
+    "workflow_id": "DORA-004",
+    "workflow_name": "ICT policy acknowledgement and attestation",
+    "trigger": [
+      "new policy published",
+      "policy materially changed",
+      "annual attestation cycle starts"
+    ],
+    "owner": "policy_owner",
+    "deadline": {
+      "type": "internal_policy",
+      "value": null
+    },
+    "required_evidence": [
+      "policy_hash",
+      "attestation_log",
+      "signer_identity",
+      "attestation_timestamp",
+      "population_scope"
+    ],
+    "status_states": [
+      "scheduled",
+      "open",
+      "in_progress",
+      "completed",
+      "overdue",
+      "expired"
+    ],
+    "dora_mapping": {
+      "pillars": ["ict_risk_management"],
+      "official_surface": ["governance", "roles_and_responsibilities", "policy_framework"]
+    }
+  },
+  {
+    "workflow_id": "DORA-005",
+    "workflow_name": "Backup evidence capture",
+    "trigger": [
+      "scheduled backup completes",
+      "backup job changes",
+      "control review requests proof"
+    ],
+    "owner": "backup_owner",
+    "deadline": null,
+    "required_evidence": [
+      "backup_job_receipt",
+      "target_location_confirmation",
+      "timestamp",
+      "scope_of_data",
+      "job_result"
+    ],
+    "status_states": [
+      "scheduled",
+      "running",
+      "completed",
+      "failed",
+      "evidence_missing"
+    ],
+    "dora_mapping": {
+      "pillars": ["ict_risk_management"],
+      "official_surface": ["backup_policies", "response_and_recovery_plans"]
+    }
+  },
+  {
+    "workflow_id": "DORA-006",
+    "workflow_name": "Restore proof workflow",
+    "trigger": [
+      "scheduled restore test",
+      "incident recovery",
+      "auditor or supervisor requests proof",
+      "new backup architecture is deployed"
+    ],
+    "owner": "recovery_owner",
+    "deadline": {
+      "type": "internal_policy",
+      "value": null
+    },
+    "required_evidence": [
+      "restore_test_manifest",
+      "recovery_objective_result",
+      "test_scope",
+      "exceptions_log",
+      "approver_identity"
+    ],
+    "status_states": [
+      "scheduled",
+      "in_progress",
+      "completed",
+      "failed",
+      "remediation_required"
+    ],
+    "dora_mapping": {
+      "pillars": ["ict_risk_management"],
+      "official_surface": ["business_continuity", "response_and_recovery_plans", "testing_of_bcp"]
+    }
+  },
+  {
+    "workflow_id": "DORA-007",
+    "workflow_name": "ICT incident intake",
+    "trigger": [
+      "security event is detected",
+      "operational disruption is detected",
+      "provider notifies service issue",
+      "monitoring threshold is crossed"
+    ],
+    "owner": "incident_manager",
+    "deadline": {
+      "type": "immediate_intake",
+      "value": "as_soon_as_detected"
+    },
+    "required_evidence": [
+      "incident_record",
+      "event_source",
+      "first_seen_timestamp",
+      "affected_service_list",
+      "initial_severity"
+    ],
+    "status_states": [
+      "open",
+      "triaged",
+      "under_investigation",
+      "contained",
+      "closed",
+      "reopened"
+    ],
+    "dora_mapping": {
+      "pillars": ["ict_related_incidents"],
+      "official_surface": ["incident_management"]
+    }
+  },
+  {
+    "workflow_id": "DORA-008",
+    "workflow_name": "ICT incident classification",
+    "trigger": [
+      "incident intake completed",
+      "new material facts emerge",
+      "incident impact changes"
+    ],
+    "owner": "incident_manager",
+    "deadline": {
+      "type": "internal_gate",
+      "value": "before_major_incident_reporting_clock_starts"
+    },
+    "required_evidence": [
+      "classification_receipt",
+      "impact_assessment",
+      "classification_rationale",
+      "supporting_metrics",
+      "reviewer_identity"
+    ],
+    "status_states": [
+      "pending",
+      "classified_non_major",
+      "classified_major",
+      "held_pending",
+      "reclassified",
+      "closed"
+    ],
+    "dora_mapping": {
+      "pillars": ["ict_related_incidents"],
+      "official_surface": ["incident_classification", "significant_cyber_threat_classification"]
+    }
+  },
+  {
+    "workflow_id": "DORA-009",
+    "workflow_name": "Major incident reporting orchestration",
+    "trigger": [
+      "incident is classified as major"
+    ],
+    "owner": "regulatory_reporting_authority",
+    "deadline": {
+      "type": "regulatory_multi_stage",
+      "initial_notification": {
+        "within": "4h_after_classification",
+        "outer_limit": "24h_after_detection"
+      },
+      "intermediate_report": {
+        "within": "72h"
+      },
+      "final_report": {
+        "within": "1_month"
+      }
+    },
+    "required_evidence": [
+      "initial_report_packet",
+      "intermediate_report_packet",
+      "final_report_packet",
+      "submission_receipts",
+      "incident_lineage",
+      "approver_identity"
+    ],
+    "status_states": [
+      "awaiting_initial_report",
+      "initial_report_submitted",
+      "awaiting_intermediate_report",
+      "intermediate_report_submitted",
+      "awaiting_final_report",
+      "final_report_submitted",
+      "closed",
+      "overdue"
+    ],
+    "dora_mapping": {
+      "pillars": ["ict_related_incidents"],
+      "official_surface": ["major_incident_reporting"]
+    }
+  },
+  {
+    "workflow_id": "DORA-010",
+    "workflow_name": "Significant cyber threat notification",
+    "trigger": [
+      "significant cyber threat is identified",
+      "threat intelligence indicates imminent material impact"
+    ],
+    "owner": "notification_authority",
+    "deadline": {
+      "type": "internal_policy_or_competent_authority_guidance",
+      "value": null
+    },
+    "required_evidence": [
+      "threat_assessment",
+      "notification_decision_record",
+      "notification_payload",
+      "submission_receipt_or_decline_rationale"
+    ],
+    "status_states": [
+      "pending_assessment",
+      "notification_required",
+      "notified",
+      "declined_with_rationale",
+      "closed"
+    ],
+    "dora_mapping": {
+      "pillars": ["ict_related_incidents"],
+      "official_surface": ["significant_cyber_threat_notification"]
+    }
+  },
+  {
+    "workflow_id": "DORA-011",
+    "workflow_name": "Post-incident review and corrective action",
+    "trigger": [
+      "incident is stabilized",
+      "incident is closed",
+      "major incident report requires lessons learned"
+    ],
+    "owner": "incident_review_chair",
+    "deadline": {
+      "type": "internal_policy",
+      "value": null
+    },
+    "required_evidence": [
+      "post_incident_review_document",
+      "root_cause_analysis",
+      "control_gap_list",
+      "assigned_actions",
+      "target_dates"
+    ],
+    "status_states": [
+      "scheduled",
+      "in_review",
+      "actions_assigned",
+      "tracking",
+      "completed",
+      "overdue"
+    ],
+    "dora_mapping": {
+      "pillars": ["ict_risk_management", "ict_related_incidents"],
+      "official_surface": ["continuous_improvement", "corrective_measures"]
+    }
+  },
+  {
+    "workflow_id": "DORA-012",
+    "workflow_name": "ICT risk assessment lifecycle",
+    "trigger": [
+      "new service is proposed",
+      "material change occurs",
+      "periodic review cycle starts",
+      "major incident occurs"
+    ],
+    "owner": "risk_owner",
+    "deadline": {
+      "type": "internal_policy",
+      "value": null
+    },
+    "required_evidence": [
+      "risk_assessment_record",
+      "control_mapping",
+      "treatment_plan",
+      "risk_acceptance_or_escalation_decision",
+      "review_timestamp"
+    ],
+    "status_states": [
+      "draft",
+      "submitted",
+      "under_review",
+      "approved",
+      "treatment_in_progress",
+      "accepted",
+      "rejected",
+      "expired"
+    ],
+    "dora_mapping": {
+      "pillars": ["ict_risk_management"],
+      "official_surface": ["ict_risk_management_framework"]
+    }
+  },
+  {
+    "workflow_id": "DORA-013",
+    "workflow_name": "Control failure to remediation",
+    "trigger": [
+      "monitoring detects failed control",
+      "test identifies deficiency",
+      "audit identifies deficiency"
+    ],
+    "owner": "control_owner",
+    "deadline": {
+      "type": "severity_based_internal_sla",
+      "value": null
+    },
+    "required_evidence": [
+      "finding_record",
+      "failure_evidence",
+      "remediation_plan",
+      "owner_assignment",
+      "retest_result"
+    ],
+    "status_states": [
+      "open",
+      "acknowledged",
+      "remediation_in_progress",
+      "ready_for_retest",
+      "closed",
+      "accepted_as_exception",
+      "overdue"
+    ],
+    "dora_mapping": {
+      "pillars": ["ict_risk_management"],
+      "official_surface": ["control_monitoring", "remediation"]
+    }
+  },
+  {
+    "workflow_id": "DORA-014",
+    "workflow_name": "Resilience testing schedule",
+    "trigger": [
+      "annual testing cycle starts",
+      "new critical service enters production",
+      "material change occurs",
+      "supervisory request is received"
+    ],
+    "owner": "testing_authority",
+    "deadline": {
+      "type": "program_cycle",
+      "value": "per_testing_program"
+    },
+    "required_evidence": [
+      "approved_test_calendar",
+      "scope_definition",
+      "test_objectives",
+      "named_test_owner",
+      "evidence_manifest"
+    ],
+    "status_states": [
+      "planned",
+      "approved",
+      "scheduled",
+      "in_progress",
+      "completed",
+      "deferred",
+      "cancelled"
+    ],
+    "dora_mapping": {
+      "pillars": ["digital_operational_resilience_testing"],
+      "official_surface": ["testing_program"]
+    }
+  },
+  {
+    "workflow_id": "DORA-015",
+    "workflow_name": "Threat-led penetration testing management",
+    "trigger": [
+      "entity or service enters TLPT scope",
+      "TLPT cycle comes due",
+      "risk authority mandates advanced testing"
+    ],
+    "owner": "senior_testing_authority",
+    "deadline": {
+      "type": "program_cycle",
+      "value": "risk_based_or_regulatory_cycle"
+    },
+    "required_evidence": [
+      "tlpt_scope",
+      "scenario_pack",
+      "provider_approvals",
+      "rules_of_engagement",
+      "results_report",
+      "remediation_entries"
+    ],
+    "status_states": [
+      "scoping",
+      "approved",
+      "scheduled",
+      "in_execution",
+      "results_issued",
+      "remediation_tracking",
+      "closed"
+    ],
+    "dora_mapping": {
+      "pillars": ["digital_operational_resilience_testing"],
+      "official_surface": ["advanced_testing", "tlpt"]
+    }
+  },
+  {
+    "workflow_id": "DORA-016",
+    "workflow_name": "Third-party ICT provider onboarding review",
+    "trigger": [
+      "new ICT supplier is proposed",
+      "existing supplier scope materially expands",
+      "renewal triggers fresh review"
+    ],
+    "owner": "vendor_risk_owner",
+    "deadline": {
+      "type": "pre_contract_gate",
+      "value": "before_contract_execution"
+    },
+    "required_evidence": [
+      "due_diligence_pack",
+      "risk_score",
+      "service_criticality_decision",
+      "contract_metadata",
+      "approval_or_rejection_decision"
+    ],
+    "status_states": [
+      "draft",
+      "submitted",
+      "under_review",
+      "approved",
+      "conditionally_approved",
+      "rejected",
+      "withdrawn"
+    ],
+    "dora_mapping": {
+      "pillars": ["ict_third_party_risk_management"],
+      "official_surface": ["third_party_risk_management", "provider_due_diligence"]
+    }
+  },
+  {
+    "workflow_id": "DORA-017",
+    "workflow_name": "Register of information maintenance",
+    "trigger": [
+      "new ICT contract is signed",
+      "contract is amended",
+      "provider details change",
+      "periodic register refresh starts"
+    ],
+    "owner": "third_party_risk_authority",
+    "deadline": {
+      "type": "regulatory_record_maintenance",
+      "value": "kept_current_and_submission_ready"
+    },
+    "required_evidence": [
+      "register_row_update",
+      "source_contract_hash",
+      "provider_identity",
+      "service_scope",
+      "criticality_flag",
+      "versioned_export"
+    ],
+    "status_states": [
+      "draft",
+      "pending_update",
+      "updated",
+      "validated",
+      "submitted",
+      "superseded",
+      "stale"
+    ],
+    "dora_mapping": {
+      "pillars": ["ict_third_party_risk_management"],
+      "official_surface": ["register_of_information", "ict_contractual_arrangements"]
+    }
+  },
+  {
+    "workflow_id": "DORA-018",
+    "workflow_name": "Contract clause variance review",
+    "trigger": [
+      "new ICT contract deviates from standard terms",
+      "renewal contains non-standard DORA clauses",
+      "negotiation introduces exceptions"
+    ],
+    "owner": "legal_risk_authority",
+    "deadline": {
+      "type": "pre_contract_gate",
+      "value": "before_contract_execution"
+    },
+    "required_evidence": [
+      "clause_comparison",
+      "variance_memo",
+      "risk_assessment",
+      "approval_decision",
+      "compensating_controls_if_any"
+    ],
+    "status_states": [
+      "draft",
+      "under_review",
+      "approved",
+      "approved_with_conditions",
+      "rejected",
+      "closed"
+    ],
+    "dora_mapping": {
+      "pillars": ["ict_third_party_risk_management"],
+      "official_surface": ["key_contractual_provisions", "contractual_risk_management"]
+    }
+  },
+  {
+    "workflow_id": "DORA-019",
+    "workflow_name": "Subcontracting change review",
+    "trigger": [
+      "provider proposes subcontractor change",
+      "provider adds subprocessor",
+      "provider changes delivery chain for a supported service"
+    ],
+    "owner": "third_party_risk_authority",
+    "deadline": {
+      "type": "contractual_notice_window",
+      "value": null
+    },
+    "required_evidence": [
+      "subcontracting_notice",
+      "impact_assessment",
+      "affected_service_list",
+      "decision_record",
+      "updated_register_if_accepted"
+    ],
+    "status_states": [
+      "notice_received",
+      "under_review",
+      "accepted",
+      "conditionally_accepted",
+      "rejected",
+      "closed"
+    ],
+    "dora_mapping": {
+      "pillars": ["ict_third_party_risk_management"],
+      "official_surface": ["subcontracting", "third_party_change_governance"]
+    }
+  },
+  {
+    "workflow_id": "DORA-020",
+    "workflow_name": "Concentration risk review",
+    "trigger": [
+      "periodic risk review starts",
+      "provider share of critical services increases",
+      "new common dependency is identified"
+    ],
+    "owner": "resilience_risk_authority",
+    "deadline": {
+      "type": "periodic_review",
+      "value": null
+    },
+    "required_evidence": [
+      "concentration_analysis",
+      "provider_exposure_map",
+      "critical_service_overlap_report",
+      "mitigation_decision"
+    ],
+    "status_states": [
+      "scheduled",
+      "in_review",
+      "mitigation_required",
+      "accepted",
+      "closed",
+      "escalated"
+    ],
+    "dora_mapping": {
+      "pillars": ["ict_third_party_risk_management", "ict_risk_management"],
+      "official_surface": ["concentration_risk", "dependency_risk"]
+    }
+  },
+  {
+    "workflow_id": "DORA-021",
+    "workflow_name": "Exit and substitution planning",
+    "trigger": [
+      "critical provider review starts",
+      "renewal decision requires exit assessment",
+      "provider risk materially increases",
+      "supervisor requests proof of exit feasibility"
+    ],
+    "owner": "service_owner",
+    "deadline": {
+      "type": "risk_based_review_cycle",
+      "value": null
+    },
+    "required_evidence": [
+      "exit_plan",
+      "alternative_provider_analysis",
+      "substitution_feasibility_assessment",
+      "test_result_if_exercised",
+      "management_approval"
+    ],
+    "status_states": [
+      "draft",
+      "under_review",
+      "approved",
+      "tested",
+      "stale",
+      "superseded"
+    ],
+    "dora_mapping": {
+      "pillars": ["ict_third_party_risk_management", "ict_risk_management"],
+      "official_surface": ["exit_strategy", "business_continuity", "alternative_solutions_assessment"]
+    }
+  },
+  {
+    "workflow_id": "DORA-022",
+    "workflow_name": "Management-body resilience reporting",
+    "trigger": [
+      "monthly reporting cycle starts",
+      "quarterly reporting cycle starts",
+      "major incident occurs",
+      "material third-party issue occurs"
+    ],
+    "owner": "compliance_reporting_owner",
+    "deadline": {
+      "type": "governance_reporting_cycle",
+      "value": null
+    },
+    "required_evidence": [
+      "board_packet",
+      "supporting_metrics",
+      "incident_summary",
+      "testing_summary",
+      "third_party_risk_summary",
+      "versioned_source_manifest"
+    ],
+    "status_states": [
+      "scheduled",
+      "assembling",
+      "under_review",
+      "issued",
+      "acknowledged",
+      "overdue"
+    ],
+    "dora_mapping": {
+      "pillars": ["ict_risk_management"],
+      "official_surface": ["management_body_responsibility", "governance_reporting"]
+    }
+  },
+  {
+    "workflow_id": "DORA-023",
+    "workflow_name": "Information-sharing participation control",
+    "trigger": [
+      "entity seeks to join information-sharing arrangement",
+      "proposed outbound sharing event",
+      "renewal of participation terms"
+    ],
+    "owner": "legal_risk_authority",
+    "deadline": {
+      "type": "pre_participation_gate",
+      "value": "before_joining_or_disclosure"
+    },
+    "required_evidence": [
+      "membership_or_participation_approval",
+      "sharing_policy",
+      "disclosure_log",
+      "sanitisation_record",
+      "counterparty_or_forum_identity"
+    ],
+    "status_states": [
+      "draft",
+      "under_review",
+      "approved",
+      "active",
+      "suspended",
+      "terminated"
+    ],
+    "dora_mapping": {
+      "pillars": ["information_sharing"],
+      "official_surface": ["information_sharing_arrangements"]
+    }
+  },
+  {
+    "workflow_id": "DORA-024",
+    "workflow_name": "Supervisory response pack generation",
+    "trigger": [
+      "competent authority request received",
+      "inspection starts",
+      "thematic review request received",
+      "register submission cycle starts"
+    ],
+    "owner": "regulatory_liaison_authority",
+    "deadline": {
+      "type": "external_request_deadline",
+      "value": null
+    },
+    "required_evidence": [
+      "request_record",
+      "compiled_response_pack",
+      "source_manifest",
+      "approval_record",
+      "submission_receipt"
+    ],
+    "status_states": [
+      "request_received",
+      "assembling",
+      "under_review",
+      "submitted",
+      "closed",
+      "overdue"
+    ],
+    "dora_mapping": {
+      "pillars": ["ict_risk_management", "ict_third_party_risk_management", "ict_related_incidents"],
+      "official_surface": ["supervisory_reporting", "register_submission", "regulatory_response"]
+    }
+  }
+]
