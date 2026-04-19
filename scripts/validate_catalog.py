@@ -35,11 +35,13 @@ INVALID_DEADLINE_FIXTURES = [
 VALID_DORA_MAPPING_FIXTURES = [
     DORA_MAPPING_FIXTURE_DIR / "valid-major-incident-mapping.json",
     DORA_MAPPING_FIXTURE_DIR / "valid-incident-management-mapping.json",
+    DORA_MAPPING_FIXTURE_DIR / "valid-third-party-onboarding-mapping.json",
 ]
 INVALID_DORA_MAPPING_FIXTURES = [
     DORA_MAPPING_FIXTURE_DIR / "invalid-bad-pillar.json",
     DORA_MAPPING_FIXTURE_DIR / "invalid-empty-official-surface.json",
     DORA_MAPPING_FIXTURE_DIR / "invalid-ict-related-incidents-disallowed-surface.json",
+    DORA_MAPPING_FIXTURE_DIR / "invalid-third-party-exact-unsupported-surface.json",
 ]
 VALID_WORKFLOW_FIXTURES = [
     WORKFLOW_FIXTURE_DIR / "valid-dora-009-row.json",
