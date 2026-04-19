@@ -20,6 +20,7 @@ Boundary:
 - `schemas/enums/deadline-type.enum.json` — authoritative allowed values for `deadline.type`
 - `schemas/enums/dora-pillar.enum.json` — authoritative allowed values for `dora_mapping.pillars`
 - `tests/fixtures/deadline/` — golden deadline fixtures for expected pass/fail behavior
+- `tests/fixtures/workflow/` — golden full-row workflow fixtures for expected pass/fail behavior
 - `scripts/validate_catalog.py` — local validator for catalog JSON files, enum/schema alignment checks, external schema resolution, and fixture validation
 - `.github/workflows/validate-catalog.yml` — CI gate enforcing schema validation on push and pull request
 
@@ -71,11 +72,20 @@ Current deadline fixtures:
 - `tests/fixtures/deadline/invalid-regulatory-multi-stage-missing-final-report.json`
 - `tests/fixtures/deadline/invalid-simple-deadline-extra-key.json`
 
+Current workflow-row fixtures:
+- `tests/fixtures/workflow/valid-dora-009-row.json`
+- `tests/fixtures/workflow/invalid-workflow-row-bad-owner.json`
+
 The validator treats these as an expected pass/fail corpus:
 - valid fixtures must validate successfully
 - invalid fixtures must fail validation
 
-This gives the repository a replayable behavior check for the deadline schema, not just a shape check against production data.
+Deadline fixtures are validated against the dedicated deadline schema.
+Workflow-row fixtures are wrapped into a one-element catalog array and validated against the full top-level catalog schema.
+
+This gives the repository a replayable behavior check for both:
+- deadline contract behavior
+- full workflow row contract behavior
 
 ## Validation
 
@@ -93,6 +103,7 @@ CI validation:
 - fails the build if schema enums and normalized enum files diverge
 - resolves the dedicated deadline schema during validation rather than relying on implicit network fetches
 - runs the golden deadline fixture corpus
+- runs the golden workflow-row fixture corpus
 
 ## Design notes
 
@@ -109,5 +120,5 @@ This repository currently stores the workflow catalog only. It does not yet cont
 - issue templates for workflow changes
 - versioned changelog for catalog mutations
 - CSV/JSONL export generation
-- golden fixtures for full workflow rows
+- additional invalid workflow fixtures such as bad `dora_mapping.pillars`
 - dedicated schema for `dora_mapping` if official-surface discipline needs tightening later
