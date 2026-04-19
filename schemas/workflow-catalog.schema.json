@@ -27,16 +27,6 @@
         "third_party_risk_authority",
         "vendor_risk_owner"
       ]
-    },
-    "doraPillarEnum": {
-      "type": "string",
-      "enum": [
-        "digital_operational_resilience_testing",
-        "ict_related_incidents",
-        "ict_risk_management",
-        "ict_third_party_risk_management",
-        "information_sharing"
-      ]
     }
   },
   "type": "array",
@@ -100,26 +90,7 @@
         }
       },
       "dora_mapping": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": ["pillars", "official_surface"],
-        "properties": {
-          "pillars": {
-            "type": "array",
-            "minItems": 1,
-            "items": {
-              "$ref": "#/$defs/doraPillarEnum"
-            }
-          },
-          "official_surface": {
-            "type": "array",
-            "minItems": 1,
-            "items": {
-              "type": "string",
-              "minLength": 1
-            }
-          }
-        }
+        "$ref": "https://github.com/witnessops/witnessops-catalog-dora/schemas/dora-mapping.schema.json"
       }
     }
   }
