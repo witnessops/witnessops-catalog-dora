@@ -19,6 +19,7 @@ except ImportError as exc:  # pragma: no cover
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_PATH = REPO_ROOT / "schemas" / "workflow-catalog.schema.json"
 DEADLINE_SCHEMA_PATH = REPO_ROOT / "schemas" / "deadline.schema.json"
+DORA_MAPPING_SCHEMA_PATH = REPO_ROOT / "schemas" / "dora-mapping.schema.json"
 CATALOG_DIR = REPO_ROOT / "catalog"
 DEADLINE_FIXTURE_DIR = REPO_ROOT / "tests" / "fixtures" / "deadline"
 WORKFLOW_FIXTURE_DIR = REPO_ROOT / "tests" / "fixtures" / "workflow"
@@ -50,7 +51,7 @@ ENUM_SPECS = {
     },
     "dora_mapping.pillars": {
         "path": REPO_ROOT / "schemas" / "enums" / "dora-pillar.enum.json",
-        "schema_file": SCHEMA_PATH,
+        "schema_file": DORA_MAPPING_SCHEMA_PATH,
         "schema_path": ("$defs", "doraPillarEnum", "enum"),
     },
 }
@@ -195,7 +196,7 @@ def validate_workflow_row_golden_fixtures(catalog_validator: Draft202012Validato
 
 
 def main() -> int:
-    for required_path in (SCHEMA_PATH, DEADLINE_SCHEMA_PATH):
+    for required_path in (SCHEMA_PATH, DEADLINE_SCHEMA_PATH, DORA_MAPPING_SCHEMA_PATH):
         if not required_path.exists():
             print(f"Schema file not found: {required_path}", file=sys.stderr)
             return 2
@@ -208,6 +209,7 @@ def main() -> int:
     schema_docs = {
         SCHEMA_PATH: load_json(SCHEMA_PATH),
         DEADLINE_SCHEMA_PATH: load_json(DEADLINE_SCHEMA_PATH),
+        DORA_MAPPING_SCHEMA_PATH: load_json(DORA_MAPPING_SCHEMA_PATH),
     }
     if not validate_enum_alignment(schema_docs):
         return 1
