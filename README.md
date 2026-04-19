@@ -15,6 +15,8 @@ Boundary:
 
 - `catalog/dora-workflows.v1.json` — initial machine-readable workflow catalog
 - `schemas/workflow-catalog.schema.json` — JSON Schema for the catalog shape
+- `scripts/validate_catalog.py` — local validator for all catalog JSON files
+- `.github/workflows/validate-catalog.yml` — CI gate enforcing schema validation on push and pull request
 
 ## Data contract
 
@@ -37,6 +39,20 @@ Most workflow deadlines are represented as:
 - `internal_policy` when the workflow should exist but the timing must be defined by operator policy or supervisory instruction
 
 `DORA-009` contains the explicit staged reporting timing structure because that surface has concrete external timing.
+
+## Validation
+
+Local validation:
+
+```bash
+python -m pip install jsonschema==4.22.0
+python scripts/validate_catalog.py
+```
+
+CI validation:
+- runs on pushes to `main`
+- runs on pull requests affecting catalog, schema, validator, or workflow files
+- fails the build if any catalog JSON file no longer conforms to the schema
 
 ## Design notes
 
