@@ -1,0 +1,13 @@
+{
+  "type": "regulatory_multi_stage",
+  "initial_notification": {
+    "within": "4h_after_classification",
+    "outer_limit": "24h_after_detection"
+  },
+  "intermediate_report": {
+    "within": "72h"
+  },
+  "final_report": {
+    "within": "1_month"
+  }
+}
