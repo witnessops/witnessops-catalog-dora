@@ -35,6 +35,7 @@ VALID_WORKFLOW_FIXTURES = [
 ]
 INVALID_WORKFLOW_FIXTURES = [
     WORKFLOW_FIXTURE_DIR / "invalid-workflow-row-bad-owner.json",
+    WORKFLOW_FIXTURE_DIR / "invalid-workflow-row-bad-pillar.json",
 ]
 ENUM_SPECS = {
     "owner": {
