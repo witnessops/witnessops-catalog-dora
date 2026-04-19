@@ -1,0 +1,307 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/witnessops/witnessops-catalog-dora/schemas/deadline.schema.json",
+  "title": "WitnessOps DORA Deadline",
+  "$defs": {
+    "deadlineTypeEnum": {
+      "type": "string",
+      "enum": [
+        "contractual_notice_window",
+        "external_request_deadline",
+        "governance_reporting_cycle",
+        "immediate_intake",
+        "internal_gate",
+        "internal_policy",
+        "internal_policy_or_competent_authority_guidance",
+        "periodic_review",
+        "pre_contract_gate",
+        "pre_participation_gate",
+        "program_cycle",
+        "regulatory_multi_stage",
+        "regulatory_record_maintenance",
+        "risk_based_review_cycle",
+        "severity_based_internal_sla"
+      ]
+    },
+    "nullableValue": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "standardStage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "within"
+      ],
+      "properties": {
+        "within": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "initialStage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "within",
+        "outer_limit"
+      ],
+      "properties": {
+        "within": {
+          "type": "string",
+          "minLength": 1
+        },
+        "outer_limit": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "simpleDeadline": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "value"
+      ],
+      "properties": {
+        "type": {
+          "$ref": "#/$defs/deadlineTypeEnum"
+        },
+        "value": {
+          "$ref": "#/$defs/nullableValue"
+        }
+      }
+    }
+  },
+  "oneOf": [
+    {
+      "allOf": [
+        {
+          "$ref": "#/$defs/simpleDeadline"
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "contractual_notice_window"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "allOf": [
+        {
+          "$ref": "#/$defs/simpleDeadline"
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "external_request_deadline"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "allOf": [
+        {
+          "$ref": "#/$defs/simpleDeadline"
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "governance_reporting_cycle"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "allOf": [
+        {
+          "$ref": "#/$defs/simpleDeadline"
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "immediate_intake"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "allOf": [
+        {
+          "$ref": "#/$defs/simpleDeadline"
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "internal_gate"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "allOf": [
+        {
+          "$ref": "#/$defs/simpleDeadline"
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "internal_policy"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "allOf": [
+        {
+          "$ref": "#/$defs/simpleDeadline"
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "internal_policy_or_competent_authority_guidance"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "allOf": [
+        {
+          "$ref": "#/$defs/simpleDeadline"
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "periodic_review"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "allOf": [
+        {
+          "$ref": "#/$defs/simpleDeadline"
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "pre_contract_gate"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "allOf": [
+        {
+          "$ref": "#/$defs/simpleDeadline"
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "pre_participation_gate"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "allOf": [
+        {
+          "$ref": "#/$defs/simpleDeadline"
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "program_cycle"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "initial_notification",
+        "intermediate_report",
+        "final_report"
+      ],
+      "properties": {
+        "type": {
+          "const": "regulatory_multi_stage"
+        },
+        "initial_notification": {
+          "$ref": "#/$defs/initialStage"
+        },
+        "intermediate_report": {
+          "$ref": "#/$defs/standardStage"
+        },
+        "final_report": {
+          "$ref": "#/$defs/standardStage"
+        }
+      }
+    },
+    {
+      "allOf": [
+        {
+          "$ref": "#/$defs/simpleDeadline"
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "regulatory_record_maintenance"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "allOf": [
+        {
+          "$ref": "#/$defs/simpleDeadline"
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "risk_based_review_cycle"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "allOf": [
+        {
+          "$ref": "#/$defs/simpleDeadline"
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "severity_based_internal_sla"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
