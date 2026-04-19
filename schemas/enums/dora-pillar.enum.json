@@ -1,0 +1,11 @@
+{
+  "name": "dora_mapping.pillars",
+  "type": "string",
+  "enum": [
+    "digital_operational_resilience_testing",
+    "ict_related_incidents",
+    "ict_risk_management",
+    "ict_third_party_risk_management",
+    "information_sharing"
+  ]
+}
