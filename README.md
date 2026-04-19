@@ -21,6 +21,7 @@ Boundary:
 - `schemas/enums/deadline-type.enum.json` — authoritative allowed values for `deadline.type`
 - `schemas/enums/dora-pillar.enum.json` — authoritative allowed values for `dora_mapping.pillars`
 - `tests/fixtures/deadline/` — golden deadline fixtures for expected pass/fail behavior
+- `tests/fixtures/dora-mapping/` — golden DORA mapping fixtures for expected pass/fail behavior
 - `tests/fixtures/workflow/` — golden full-row workflow fixtures for expected pass/fail behavior
 - `scripts/validate_catalog.py` — local validator for catalog JSON files, enum/schema alignment checks, external schema resolution, and fixture validation
 - `.github/workflows/validate-catalog.yml` — CI gate enforcing schema validation on push and pull request
@@ -86,6 +87,11 @@ Current deadline fixtures:
 - `tests/fixtures/deadline/invalid-regulatory-multi-stage-missing-final-report.json`
 - `tests/fixtures/deadline/invalid-simple-deadline-extra-key.json`
 
+Current DORA mapping fixtures:
+- `tests/fixtures/dora-mapping/valid-major-incident-mapping.json`
+- `tests/fixtures/dora-mapping/invalid-bad-pillar.json`
+- `tests/fixtures/dora-mapping/invalid-empty-official-surface.json`
+
 Current workflow-row fixtures:
 - `tests/fixtures/workflow/valid-dora-009-row.json`
 - `tests/fixtures/workflow/invalid-workflow-row-bad-owner.json`
@@ -96,10 +102,12 @@ The validator treats these as an expected pass/fail corpus:
 - invalid fixtures must fail validation
 
 Deadline fixtures are validated against the dedicated deadline schema.
+DORA mapping fixtures are validated against the dedicated DORA mapping schema.
 Workflow-row fixtures are wrapped into a one-element catalog array and validated against the full top-level catalog schema.
 
-This gives the repository a replayable behavior check for both:
+This gives the repository a replayable behavior check for:
 - deadline contract behavior
+- dora_mapping contract behavior
 - full workflow row contract behavior
 
 ## Validation
@@ -119,6 +127,7 @@ CI validation:
 - resolves the dedicated deadline schema during validation rather than relying on implicit network fetches
 - resolves the dedicated DORA mapping schema during validation rather than relying on implicit network fetches
 - runs the golden deadline fixture corpus
+- runs the golden DORA mapping fixture corpus
 - runs the golden workflow-row fixture corpus
 
 ## Design notes
