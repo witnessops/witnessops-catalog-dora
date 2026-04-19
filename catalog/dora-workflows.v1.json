@@ -252,7 +252,7 @@
       "closed"
     ],
     "dora_mapping": {
-      "pillars": ["ict_related_incidents"],
+      "pillars": ["ict_related_incidents", "ict_risk_management"],
       "official_surface": ["incident_classification", "significant_cyber_threat_classification"]
     }
   },
@@ -325,7 +325,7 @@
       "closed"
     ],
     "dora_mapping": {
-      "pillars": ["ict_related_incidents"],
+      "pillars": ["ict_related_incidents", "ict_risk_management"],
       "official_surface": ["significant_cyber_threat_notification"]
     }
   },
