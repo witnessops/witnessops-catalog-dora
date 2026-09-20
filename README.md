@@ -2,6 +2,13 @@
 
 Machine-readable DORA workflow catalog for WitnessOps.
 
+## Portfolio status
+
+Kept as a frozen business reference, not an active compliance product or an
+operational scheduler. Reporting timings in this catalog are not approved for
+timer or job scheduling. This portfolio decision does not change any timing,
+mapping, schema, or legal-applicability boundary below.
+
 ## Purpose
 
 This repository holds a structured catalog of workflows aligned to the Digital Operational Resilience Act (DORA) operating surfaces.
